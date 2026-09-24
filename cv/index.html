@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Anjali Suman's current CV.">
     <title>CV · Anjali Suman</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../styles.css">
   </head>
   <body class="cv-page">
     <main class="cv-main">
@@ -13,7 +13,7 @@
       <h1>CV</h1>
       <p class="cv-intro">The current version from my <a href="https://github.com/AnjaliML/Anjali_CV/blob/main/Anjali_CV.pdf">GitHub CV repository</a>.</p>
       <nav aria-label="CV page links">
-        <a href="index.html">Home</a>
+        <a href="../">Home</a>
         <a href="https://github.com/AnjaliML/Anjali_CV/blob/main/Anjali_CV.pdf">Open PDF on GitHub</a>
       </nav>
       <p id="cv-status" role="status">Loading CV…</p>
@@ -25,9 +25,9 @@
       <span>Built simply. Hosted on GitHub Pages.</span>
     </footer>
     <script type="module">
-      import * as pdfjs from "./vendor/pdfjs/pdf.min.mjs";
+      import * as pdfjs from "../vendor/pdfjs/pdf.min.mjs";
 
-      pdfjs.GlobalWorkerOptions.workerSrc = "./vendor/pdfjs/pdf.worker.min.mjs";
+      pdfjs.GlobalWorkerOptions.workerSrc = "../vendor/pdfjs/pdf.worker.min.mjs";
       const documentPages = document.getElementById("cv-document");
       const status = document.getElementById("cv-status");
       const pdfUrl = "https://raw.githubusercontent.com/AnjaliML/Anjali_CV/main/Anjali_CV.pdf";
