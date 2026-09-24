@@ -100,6 +100,62 @@ footer {
   font-size: 0.8rem;
 }
 
+.cv-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.cv-main {
+  flex: 1;
+  width: min(100%, 72rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.cv-main h1 {
+  max-width: none;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+}
+
+.cv-intro {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.cv-intro a {
+  padding: 0;
+  border: 0;
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.cv-main nav {
+  margin: 1.5rem 0;
+}
+
+#cv-status {
+  margin-top: 2rem;
+  color: var(--muted);
+}
+
+#cv-document {
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+}
+
+#cv-document[hidden] {
+  display: none;
+}
+
+#cv-document canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  background: white;
+  box-shadow: 0 10px 30px rgba(20, 33, 61, 0.12);
+}
+
 @media (max-width: 560px) {
   footer {
     align-items: flex-start;

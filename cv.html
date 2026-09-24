@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Anjali Suman's current CV.">
+    <title>CV · Anjali Suman</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="cv-page">
+    <main class="cv-main">
+      <p class="eyebrow">Anjali Suman</p>
+      <h1>CV</h1>
+      <p class="cv-intro">The current version from my <a href="https://github.com/AnjaliML/Anjali_CV/blob/main/Anjali_CV.pdf">GitHub CV repository</a>.</p>
+      <nav aria-label="CV page links">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/AnjaliML/Anjali_CV/blob/main/Anjali_CV.pdf">Open PDF on GitHub</a>
+      </nav>
+      <p id="cv-status" role="status">Loading CV…</p>
+      <div id="cv-document" aria-label="CV pages" hidden></div>
+      <noscript><p>JavaScript is needed to show the CV here. <a href="https://github.com/AnjaliML/Anjali_CV/blob/main/Anjali_CV.pdf">Open it on GitHub</a>.</p></noscript>
+    </main>
+    <footer>
+      <span>© 2026 Anjali Suman</span>
+      <span>Built simply. Hosted on GitHub Pages.</span>
+    </footer>
+    <script type="module">
+      import * as pdfjs from "./vendor/pdfjs/pdf.min.mjs";
+
+      pdfjs.GlobalWorkerOptions.workerSrc = "./vendor/pdfjs/pdf.worker.min.mjs";
+      const documentPages = document.getElementById("cv-document");
+      const status = document.getElementById("cv-status");
+      const pdfUrl = "https://raw.githubusercontent.com/AnjaliML/Anjali_CV/main/Anjali_CV.pdf";
+
+      try {
+        const response = await fetch(`${pdfUrl}?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) throw new Error("CV unavailable");
+
+        const pdf = await pdfjs.getDocument({ data: new Uint8Array(await response.arrayBuffer()) }).promise;
+        documentPages.hidden = false;
+        for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+          const page = await pdf.getPage(pageNumber);
+          const canvas = document.createElement("canvas");
+          canvas.setAttribute("role", "img");
+          canvas.setAttribute("aria-label", `CV page ${pageNumber}`);
+          documentPages.append(canvas);
+
+          const naturalWidth = page.getViewport({ scale: 1 }).width;
+          const scale = (documentPages.clientWidth / naturalWidth) * Math.min(window.devicePixelRatio || 1, 2);
+          const viewport = page.getViewport({ scale });
+          canvas.width = Math.ceil(viewport.width);
+          canvas.height = Math.ceil(viewport.height);
+          await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+        }
+        status.hidden = true;
+      } catch (error) {
+        documentPages.hidden = true;
+        documentPages.replaceChildren();
+        status.textContent = "The CV could not be loaded here. Open the PDF on GitHub instead.";
+      }
+    </script>
+  </body>
+</html>
